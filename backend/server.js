@@ -35,14 +35,15 @@ app.delete("/delete/:id",async(req,res)=>{
     res.json({message:"deleted"});
 });
 
-app.put("/update/:id",async(req,res)=>{
-    const tasks=await Task.findById(req.params.id);
-    tasks.completed=!tasks.completed;
-    await tasks.save();
-    res.json(tasks);
+app.put("/update/:id", async (req, res) => {
+    const task = await Task.findById(req.params.id);
 
+    task.completed = !task.completed; // Toggle
+    await task.save();
+    res.json(task);
 });
-app.listen(5000,()=>console.log("sever is running"));
+
+app.listen(5000,()=>console.log("server is running"));
 
 
 

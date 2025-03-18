@@ -4,21 +4,23 @@ function Todolist(){
 
     const[tasks,settasks]=useState([]);
 
-    const fetchtask=async()=>{
-        const res=await axios.get("http://localhost:5000/lists");
+    const fetchtask = async () => {
+        const res = await axios.get("http://localhost:5000/lists");
+    // Debugging
         settasks(res.data);
-    }
+    };
+    
 
     const handledelete=async(id)=>{
         await axios.delete(`http://localhost:5000/delete/${id}`);
         fetchtask();
-    }
+    };
 
 
     const handlecom=async(id)=>{
-        await axios.put(`http://localhost:5000/update/:${id}`);
+        await axios.put(`http://localhost:5000/update/${id}`);
         fetchtask();
-    }
+    };
 
     useEffect(()=>{
         fetchtask();
@@ -27,7 +29,7 @@ function Todolist(){
     return(
         <ul>
             {tasks.map((taskk)=>(
-                <li key={taskk._id}>
+                <li key={taskk._id} style={{ textDecoration: taskk.completed ? "line-through" : "none" }}>
                     {taskk.text}
                     <button onClick={()=>handledelete(taskk._id)}>delete</button>
                     <button onClick={()=>handlecom(taskk._id)}>complete</button>
